@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MindCrack</title>
+
+<style>
+	@import url('https://fonts.googleapis.com/css2?family=Nosifer&display=swap');
+body{
+  margin:0;
+  background:black;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  min-height:100vh;
+}
+
+/* Candle responsive */
+.holder{
+  width:30vw;
+  max-width:150px;
+  min-width:120px;
+  height:auto;
+  aspect-ratio:3/8;
+  position:relative;
+}
+
+.holder *,.holder *:before,.holder *:after{
+  position:absolute;
+  content:"";
+}
+
+.candle{
+  bottom:0;
+  width:100%;
+  height:75%;
+  border-radius:50%/12%;
+  background:linear-gradient(#e48825,#e78e0e,#833c03,#4c1a03 50%,#1c0900);
+}
+
+.candle:before{
+  width:100%;
+  height:12%;
+  border-radius:50%;
+  background:radial-gradient(#eaa121,#8e4901 45%,#b86409 80%);
+}
+
+.thread{
+  width:4%;
+  height:15%;
+  top:-8%;
+  left:50%;
+  transform:translateX(-50%);
+  background:linear-gradient(#d6994a,#121212,#000);
+}
+
+.flame {
+  width: 24px;
+  height: 120px;
+  left: 50%;
+  -webkit-transform-origin: 50% 100%;
+  -ms-transform-origin: 50% 100%;
+  transform-origin: 50% 100%;
+  -webkit-transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
+  transform: translateX(-50%);
+  bottom: 100%;
+  border-radius: 50% 50% 20% 20%;
+  background: rgba(255, 255, 255, 1);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(80%, white), to(transparent));
+  background: linear-gradient(white 80%, transparent);
+  -webkit-animation: moveFlame 6s linear infinite, enlargeFlame 5s linear infinite;
+  animation: moveFlame 6s linear infinite, enlargeFlame 5s linear infinite;
+}
+
+.flame:before {
+  width: 100%;
+  height: 100%;
+  border-radius: 50% 50% 20% 20%;
+  -webkit-box-shadow: 0 0 15px 0 rgba(247, 93, 0, .4), 0 -6px 4px 0 rgba(247, 128, 0, .7);
+  box-shadow: 0 0 15px 0 rgba(247, 93, 0, .4), 0 -6px 4px 0 rgba(247, 128, 0, .7);
+}
+
+@-webkit-keyframes moveFlame {
+  0%, 100% {
+    -webkit-transform: translateX(-50%) rotate(-2deg);
+    transform: translateX(-50%) rotate(-2deg);
+  }
+
+  50% {
+    -webkit-transform: translateX(-50%) rotate(2deg);
+    transform: translateX(-50%) rotate(2deg);
+  }
+}
+
+@keyframes moveFlame {
+  0%, 100% {
+    -webkit-transform: translateX(-50%) rotate(-2deg);
+    transform: translateX(-50%) rotate(-2deg);
+  }
+
+  50% {
+    -webkit-transform: translateX(-50%) rotate(2deg);
+    transform: translateX(-50%) rotate(2deg);
+  }
+}
+
+@-webkit-keyframes enlargeFlame {
+  0%, 100% {
+    height: 120px;
+  }
+
+  50% {
+    height: 140px;
+  }
+}
+
+@keyframes enlargeFlame {
+  0%, 100% {
+    height: 120px;
+  }
+
+  50% {
+    height: 140px;
+  }
+}
+
+.glow {
+  width: 26px;
+  height: 60px;
+  border-radius: 50% 50% 35% 35%;
+  left: 50%;
+  top: -48px;
+  -webkit-transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
+  transform: translateX(-50%);
+  background: rgba(0, 133, 255, .7);
+  -webkit-box-shadow: 0 -40px 30px 0 #dc8a0c, 0 40px 50px 0 #dc8a0c, inset 3px 0 2px 0 rgba(0, 133, 255, .6), inset -3px 0 2px 0 rgba(0, 133, 255, .6);
+  box-shadow: 0 -40px 30px 0 #dc8a0c, 0 40px 50px 0 #dc8a0c, inset 3px 0 2px 0 rgba(0, 133, 255, .6), inset -3px 0 2px 0 rgba(0, 133, 255, .6);
+}
+
+.glow:before {
+  width: 70%;
+  height: 60%;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
+  transform: translateX(-50%);
+  bottom: 0;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.35);
+}
+
+.blinking-glow {
+  width: 100px;
+  height: 180px;
+  left: 50%;
+  top: -55%;
+  -webkit-transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: #ff6000;
+  -webkit-filter: blur(50px);
+  -moz-filter: blur(60px);
+  -o-filter: blur(60px);
+  -ms-filter: blur(60px);
+  filter: blur(60px);
+  -webkit-animation: blinkIt .1s infinite;
+  animation: blinkIt .1s infinite;
+}
+
+@-webkit-keyframes blinkIt {
+  50% {
+    opacity: .8;
+  }
+}
+
+@keyframes blinkIt {
+  50% {
+    opacity: .8;
+  }
+}
+
+/* Creepy Stopwatch */
+#timer{
+  color: #ffffff;
+  font-family: 'Nosifer', cursive;
+  margin-bottom: 14px;
+  font-size: 15px;
+  letter-spacing: 3px;
+
+  text-shadow:
+    0 0 6px rgba(255,255,255,0.9),
+    0 0 14px rgba(255,255,255,0.7),
+    0 0 30px rgba(255,255,255,0.4);
+
+  animation:
+    creepyBlink 2.4s infinite,
+    flicker 0.15s infinite,
+    glitchShift 3s infinite;
+}
+
+/* Random glitch movement */
+@keyframes glitchShift{
+  0%,100%{ transform: translateX(0); }
+  95%{ transform: translateX(-1px); }
+  96%{ transform: translateX(2px); }
+  97%{ transform: translateX(-2px); }
+  98%{ transform: translateX(1px); }
+}
+
+/* Slow creepy blink */
+@keyframes creepyBlink{
+  0%, 90%, 100% { opacity: 1; }
+  92% { opacity: 0.15; }
+  94% { opacity: 1; }
+  96% { opacity: 0.05; }
+}
+
+/* Fast horror flicker */
+@keyframes flicker{
+  0%   { text-shadow: 0 0 4px #fff; }
+  50%  { text-shadow: 0 0 18px #fff, 0 0 35px #fff; }
+  100% { text-shadow: 0 0 2px #fff; }
+}
+/* Creepy Music Button */
+#micBtn{
+  margin-top:14px;
+  font-size:15px;
+  padding:15px 15px;
+  border-radius:50%;
+  border:none;
+  cursor:pointer;
+
+  background:#000;
+  color:#fff;
+
+  box-shadow:
+    0 0 6px rgba(255,255,255,0.4),
+    0 0 18px rgba(255,255,255,0.3),
+    inset 0 0 12px rgba(255,255,255,0.15);
+
+  animation:
+    soundBreath 3s infinite,
+    soundFlicker 0.12s infinite;
+
+  transition: transform 0.15s ease;
+}
+
+/* sound breathing glow */
+@keyframes soundBreath{
+  0%,100%{
+    box-shadow:
+      0 0 6px rgba(255,255,255,0.4),
+      0 0 18px rgba(255,255,255,0.3),
+      inset 0 0 12px rgba(255,255,255,0.15);
+  }
+  50%{
+    box-shadow:
+      0 0 14px rgba(255,255,255,0.8),
+      0 0 35px rgba(255,255,255,0.6),
+      inset 0 0 20px rgba(255,255,255,0.35);
+  }
+}
+
+/* electric flicker */
+@keyframes soundFlicker{
+  0%{opacity:1}
+  92%{opacity:1}
+  94%{opacity:.25}
+  96%{opacity:1}
+  97%{opacity:.1}
+  100%{opacity:1}
+}
+
+/* ACTIVE = loud cursed sound */
+#micBtn.active{
+  background:#fff;
+  color:#000;
+
+  box-shadow:
+    0 0 20px rgba(255,255,255,1),
+    0 0 45px rgba(255,255,255,0.9),
+    inset 0 0 22px rgba(0,0,0,0.7);
+
+  animation:
+    soundPulse 0.6s infinite,
+    soundFlicker 0.08s infinite;
+}
+
+/* aggressive pulse */
+@keyframes soundPulse{
+  0%,100%{ transform:scale(1); }
+  50%{ transform:scale(1.12); }
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="holder">
+  <div class="candle">
+    <div class="thread"></div>
+    <div class="flame"></div>
+  </div>
+</div>
+</br>
+<div id="timer">00:00:000</div>
+</br>
+<button id="micBtn">🔊</button>
+
+<script>
+let audioCtx, mic, processor;
+let running = false;
+
+/* Stopwatch */
+let startTime, timerInterval;
+
+function startTimer(){
+  startTime = performance.now();
+  timerInterval = setInterval(()=>{
+    let t = performance.now() - startTime;
+    let ms = Math.floor(t % 1000);
+    let s = Math.floor(t/1000) % 60;
+    let m = Math.floor(t/60000);
+    timer.textContent =
+      `${String(m).padStart(2,"0")}:${String(s).padStart(2,"0")}:${String(ms).padStart(3,"0")}`;
+  },10);
+}
+
+function stopTimer(){
+  clearInterval(timerInterval);
+  timer.textContent="00:00:000";
+}
+
+micBtn.onclick = async ()=>{
+  if(!running){
+    audioCtx = new AudioContext();
+    const stream = await navigator.mediaDevices.getUserMedia({audio:true});
+    mic = audioCtx.createMediaStreamSource(stream);
+
+    processor = audioCtx.createScriptProcessor(1024,1,1);
+    mic.connect(processor);
+    processor.connect(audioCtx.destination);
+
+    processor.onaudioprocess = e=>{
+      const input = e.inputBuffer.getChannelData(0);
+      const output = e.outputBuffer.getChannelData(0);
+      output.set(input);
+    };
+
+    running = true;
+    micBtn.classList.add("active");
+    startTimer();
+  }else{
+    processor.disconnect();
+    mic.disconnect();
+    audioCtx.close();
+    running = false;
+    micBtn.classList.remove("active");
+    stopTimer();
+  }
+};
+</script>
+
+</body>
+</html>
