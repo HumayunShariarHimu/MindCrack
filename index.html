@@ -2,370 +2,877 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MindCrack</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>MindCrack — Psychological Phenomena</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Josefin+Sans:wght@100;200;300;400&family=Nosifer&display=swap" rel="stylesheet">
 
 <style>
-	@import url('https://fonts.googleapis.com/css2?family=Nosifer&display=swap');
-body{
-  margin:0;
-  background:black;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  min-height:100vh;
+:root {
+  --crimson:      #9b1c1c;
+  --deep-crimson: #5c0a0a;
+  --ember:        #d94f2b;
+  --gold:         #c9a96e;
+  --gold-dim:     #6b5030;
+  --black:        #030000;
+  --surface:      #0d0505;
+  --border:       rgba(155, 28, 28, 0.25);
+  --border-hover: rgba(201, 169, 110, 0.4);
+  --text:         #c8a47e;
+  --text-dim:     #5e3f2a;
+  --text-muted:   #3a2015;
+  --glow-red:     rgba(155, 28, 28, 0.5);
+  --radius:       4px;
 }
 
-/* Candle responsive */
-.holder{
-  width:30vw;
-  max-width:150px;
-  min-width:120px;
-  height:auto;
-  aspect-ratio:3/8;
-  position:relative;
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--black);
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: 'Josefin Sans', sans-serif;
+  overflow-x: hidden;
+  position: relative;
+  color: var(--text);
 }
 
-.holder *,.holder *:before,.holder *:after{
-  position:absolute;
-  content:"";
+/* ── BACKGROUND ── */
+.bg-layer {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+.bg-layer::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 55% 40% at 50% 30%, rgba(100,10,10,0.22) 0%, transparent 65%),
+    radial-gradient(ellipse 90% 50% at 50% 105%, rgba(50,5,5,0.4) 0%, transparent 65%);
+}
+.bg-layer::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+  opacity: 0.35;
 }
 
-.candle{
-  bottom:0;
-  width:100%;
-  height:75%;
-  border-radius:50%/12%;
-  background:linear-gradient(#e48825,#e78e0e,#833c03,#4c1a03 50%,#1c0900);
-}
-
-.candle:before{
-  width:100%;
-  height:12%;
-  border-radius:50%;
-  background:radial-gradient(#eaa121,#8e4901 45%,#b86409 80%);
-}
-
-.thread{
-  width:4%;
-  height:15%;
-  top:-8%;
-  left:50%;
-  transform:translateX(-50%);
-  background:linear-gradient(#d6994a,#121212,#000);
-}
-
-.flame {
-  width: 24px;
-  height: 120px;
-  left: 50%;
-  -webkit-transform-origin: 50% 100%;
-  -ms-transform-origin: 50% 100%;
-  transform-origin: 50% 100%;
-  -webkit-transform: translateX(-50%);
-  -ms-transform: translateX(-50%);
-  transform: translateX(-50%);
-  bottom: 100%;
-  border-radius: 50% 50% 20% 20%;
-  background: rgba(255, 255, 255, 1);
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(80%, white), to(transparent));
-  background: linear-gradient(white 80%, transparent);
-  -webkit-animation: moveFlame 6s linear infinite, enlargeFlame 5s linear infinite;
-  animation: moveFlame 6s linear infinite, enlargeFlame 5s linear infinite;
-}
-
-.flame:before {
+/* ── HEADER ── */
+.header-band {
   width: 100%;
-  height: 100%;
-  border-radius: 50% 50% 20% 20%;
-  -webkit-box-shadow: 0 0 15px 0 rgba(247, 93, 0, .4), 0 -6px 4px 0 rgba(247, 128, 0, .7);
-  box-shadow: 0 0 15px 0 rgba(247, 93, 0, .4), 0 -6px 4px 0 rgba(247, 128, 0, .7);
+  padding: 20px 24px 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  z-index: 2;
+  position: relative;
+  border-bottom: 1px solid var(--border);
+}
+.header-band::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 70px;
+  height: 1px;
+  background: var(--gold);
+  opacity: 0.35;
+}
+.brand-mark {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.brand-line {
+  width: 36px;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--gold-dim));
+}
+.brand-line.r { background: linear-gradient(to left, transparent, var(--gold-dim)); }
+
+.app-title {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: clamp(16px, 4.5vw, 26px);
+  letter-spacing: 0.3em;
+  color: var(--text);
+  text-shadow: 0 0 18px var(--glow-red);
+  animation: titleGlow 5s ease-in-out infinite;
+}
+@keyframes titleGlow {
+  0%,100% { text-shadow: 0 0 18px var(--glow-red); }
+  50%      { text-shadow: 0 0 32px var(--glow-red), 0 0 70px rgba(155,28,28,0.35); }
+}
+.app-subtitle {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-weight: 300;
+  font-size: clamp(9px, 2vw, 11px);
+  letter-spacing: 0.32em;
+  color: var(--text-dim);
 }
 
-@-webkit-keyframes moveFlame {
-  0%, 100% {
-    -webkit-transform: translateX(-50%) rotate(-2deg);
-    transform: translateX(-50%) rotate(-2deg);
-  }
-
-  50% {
-    -webkit-transform: translateX(-50%) rotate(2deg);
-    transform: translateX(-50%) rotate(2deg);
-  }
+/* ── MAIN ── */
+.main {
+  flex: 1;
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 26px 20px 18px;
+  z-index: 2;
+  position: relative;
 }
 
+/* ── CANDLE ── */
+.candle-scene {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.halo {
+  position: absolute;
+  width: clamp(160px, 50vw, 240px);
+  height: clamp(160px, 50vw, 240px);
+  border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(155,28,28,0.16) 0%, transparent 70%);
+  top: 50%; left: 50%;
+  transform: translate(-50%, -60%);
+  filter: blur(22px);
+  animation: haloPulse 4s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes haloPulse {
+  0%,100% { opacity: 0.6; transform: translate(-50%,-60%) scale(1); }
+  50%      { opacity: 1;   transform: translate(-50%,-60%) scale(1.08); }
+}
+
+.holder {
+  width: clamp(55px, 13vw, 95px);
+  aspect-ratio: 3/9;
+  position: relative;
+}
+.holder *, .holder *::before, .holder *::after {
+  position: absolute; content: "";
+}
+.candle {
+  bottom: 0; width: 100%; height: 74%;
+  border-radius: 50% / 10%;
+  background: linear-gradient(165deg, #b01010 0%, #8c0b0b 18%, #6a0808 38%, #420404 62%, #1a0101 85%, #0a0000 100%);
+  box-shadow: inset 3px 0 10px rgba(200,60,60,0.12), inset -3px 0 6px rgba(0,0,0,0.5), 0 0 18px rgba(120,10,10,0.3);
+}
+.candle::before {
+  width: 100%; height: 11%; border-radius: 50%;
+  background: radial-gradient(ellipse at 40% 40%, #c42020, #7a0a0a 50%, #a01010 80%);
+}
+.candle::after {
+  width: 14%; height: 20%; left: 18%; top: 9%;
+  border-radius: 0 0 50% 50%;
+  background: linear-gradient(#a01010, #600808);
+  opacity: 0.5;
+}
+.thread {
+  width: 3.5%; height: 13%; top: -8%; left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(#9a6030, #1a0a00, #000);
+  border-radius: 2px;
+}
+.flame-wrap {
+  position: absolute;
+  width: 100%; bottom: 100%; left: 0;
+  display: flex;
+  justify-content: center;
+  transform-origin: 50% 100%;
+}
+.flame-glow {
+  position: absolute;
+  bottom: -8px; left: 50%;
+  transform: translateX(-50%);
+  width: clamp(36px, 9vw, 62px);
+  height: clamp(70px, 20vw, 140px);
+  border-radius: 50%;
+  background: radial-gradient(ellipse at 50% 60%, rgba(220,100,0,0.25), transparent 72%);
+  filter: blur(14px);
+  animation: glowPulse 3s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes glowPulse {
+  0%,100% { opacity: 0.8; transform: translateX(-50%) scaleY(1); }
+  50%      { opacity: 1;   transform: translateX(-50%) scaleY(1.1); }
+}
+.flame {
+  width: clamp(11px, 2.8vw, 19px);
+  height: clamp(50px, 13vw, 94px);
+  border-radius: 50% 50% 18% 18%;
+  background: linear-gradient(to bottom, #fff 0%, #fff8e0 8%, #ffdd44 22%, #ff8800 52%, #cc2200 82%, transparent 100%);
+  transform-origin: 50% 100%;
+  animation: moveFlame 2.8s ease-in-out infinite, sizeFlame 4.2s ease-in-out infinite;
+  position: relative;
+  filter: drop-shadow(0 0 5px rgba(255,100,0,0.7));
+}
+.flame::before {
+  position: absolute; content: '';
+  width: 44%; height: 52%; left: 50%;
+  transform: translateX(-50%);
+  bottom: 12%; border-radius: 50%;
+  background: rgba(255,255,220,0.88);
+  filter: blur(2px);
+}
+.flame::after {
+  position: absolute; content: '';
+  width: 100%; height: 100%;
+  border-radius: 50% 50% 18% 18%;
+  box-shadow: 0 0 18px 3px rgba(255,90,0,0.45), 0 -12px 10px rgba(255,160,0,0.5);
+}
 @keyframes moveFlame {
-  0%, 100% {
-    -webkit-transform: translateX(-50%) rotate(-2deg);
-    transform: translateX(-50%) rotate(-2deg);
-  }
-
-  50% {
-    -webkit-transform: translateX(-50%) rotate(2deg);
-    transform: translateX(-50%) rotate(2deg);
-  }
+  0%   { transform: rotate(-2.5deg) skewX(1deg); }
+  25%  { transform: rotate(1.5deg) skewX(-1.5deg); }
+  50%  { transform: rotate(-1deg) skewX(2deg); }
+  75%  { transform: rotate(2deg) skewX(-0.5deg); }
+  100% { transform: rotate(-2.5deg) skewX(1deg); }
+}
+@keyframes sizeFlame {
+  0%,100% { transform: scaleY(1) scaleX(1); }
+  35%      { transform: scaleY(1.1) scaleX(0.94); }
+  70%      { transform: scaleY(0.96) scaleX(1.04); }
 }
 
-@-webkit-keyframes enlargeFlame {
-  0%, 100% {
-    height: 120px;
-  }
-
-  50% {
-    height: 140px;
-  }
+/* ── TIMER ── */
+.timer-block {
+  display: flex; flex-direction: column; align-items: center;
+  gap: 4px; margin-bottom: 18px;
 }
-
-@keyframes enlargeFlame {
-  0%, 100% {
-    height: 120px;
-  }
-
-  50% {
-    height: 140px;
-  }
+.timer-label {
+  font-size: 8px; letter-spacing: 0.5em;
+  color: var(--text-muted); text-transform: uppercase;
 }
-
-.glow {
-  width: 26px;
-  height: 60px;
-  border-radius: 50% 50% 35% 35%;
-  left: 50%;
-  top: -48px;
-  -webkit-transform: translateX(-50%);
-  -ms-transform: translateX(-50%);
-  transform: translateX(-50%);
-  background: rgba(0, 133, 255, .7);
-  -webkit-box-shadow: 0 -40px 30px 0 #dc8a0c, 0 40px 50px 0 #dc8a0c, inset 3px 0 2px 0 rgba(0, 133, 255, .6), inset -3px 0 2px 0 rgba(0, 133, 255, .6);
-  box-shadow: 0 -40px 30px 0 #dc8a0c, 0 40px 50px 0 #dc8a0c, inset 3px 0 2px 0 rgba(0, 133, 255, .6), inset -3px 0 2px 0 rgba(0, 133, 255, .6);
-}
-
-.glow:before {
-  width: 70%;
-  height: 60%;
-  left: 50%;
-  -webkit-transform: translateX(-50%);
-  -ms-transform: translateX(-50%);
-  transform: translateX(-50%);
-  bottom: 0;
-  border-radius: 50%;
-  background: rgba(0, 0, 0, 0.35);
-}
-
-.blinking-glow {
-  width: 100px;
-  height: 180px;
-  left: 50%;
-  top: -55%;
-  -webkit-transform: translateX(-50%);
-  -ms-transform: translateX(-50%);
-  transform: translateX(-50%);
-  border-radius: 50%;
-  background: #ff6000;
-  -webkit-filter: blur(50px);
-  -moz-filter: blur(60px);
-  -o-filter: blur(60px);
-  -ms-filter: blur(60px);
-  filter: blur(60px);
-  -webkit-animation: blinkIt .1s infinite;
-  animation: blinkIt .1s infinite;
-}
-
-@-webkit-keyframes blinkIt {
-  50% {
-    opacity: .8;
-  }
-}
-
-@keyframes blinkIt {
-  50% {
-    opacity: .8;
-  }
-}
-
-/* Creepy Stopwatch */
-#timer{
-  color: #ffffff;
+#timer {
   font-family: 'Nosifer', cursive;
-  margin-bottom: 14px;
-  font-size: 15px;
-  letter-spacing: 3px;
-
-  text-shadow:
-    0 0 6px rgba(255,255,255,0.9),
-    0 0 14px rgba(255,255,255,0.7),
-    0 0 30px rgba(255,255,255,0.4);
-
-  animation:
-    creepyBlink 2.4s infinite,
-    flicker 0.15s infinite,
-    glitchShift 3s infinite;
+  font-size: clamp(20px, 6.5vw, 32px);
+  letter-spacing: 6px;
+  color: #e8d4b8;
+  text-shadow: 0 0 8px rgba(255,220,180,0.7), 0 0 22px rgba(200,100,50,0.35);
+  animation: timerFlicker 4s infinite, timerGlitch 6s infinite;
+  user-select: none;
+}
+@keyframes timerFlicker {
+  0%,82%,100% { opacity: 1; }
+  85% { opacity: 0.1; }
+  87% { opacity: 1; }
+  91% { opacity: 0.04; }
+  93% { opacity: 1; }
+}
+@keyframes timerGlitch {
+  0%,88%,100% { transform: translateX(0); }
+  90% { transform: translateX(-2px); }
+  92% { transform: translateX(3px); }
+  94% { transform: translateX(-1px); }
 }
 
-/* Random glitch movement */
-@keyframes glitchShift{
-  0%,100%{ transform: translateX(0); }
-  95%{ transform: translateX(-1px); }
-  96%{ transform: translateX(2px); }
-  97%{ transform: translateX(-2px); }
-  98%{ transform: translateX(1px); }
+/* ── CONFIG PANEL ── */
+.config-panel {
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px 18px;
+  margin-bottom: 16px;
+  background: rgba(12,3,3,0.65);
+  backdrop-filter: blur(6px);
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+}
+.config-row {
+  display: flex; align-items: center;
+  justify-content: space-between; gap: 12px;
+}
+.config-label {
+  font-size: 9px; letter-spacing: 0.4em;
+  color: var(--text-dim); text-transform: uppercase; flex-shrink: 0;
+}
+.config-control { display: flex; align-items: center; gap: 8px; }
+
+/* Stepper */
+.stepper {
+  display: flex; align-items: center;
+  border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden;
+}
+.stepper button {
+  background: transparent; border: none;
+  color: var(--text-dim); width: 28px; height: 30px;
+  cursor: pointer; font-size: 15px;
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.15s, color 0.15s; flex-shrink: 0;
+}
+.stepper button:hover { background: rgba(155,28,28,0.3); color: var(--text); }
+.stepper input {
+  background: transparent; border: none;
+  border-left: 1px solid var(--border);
+  border-right: 1px solid var(--border);
+  color: var(--text); font-family: 'Josefin Sans', sans-serif;
+  font-size: 13px; font-weight: 300;
+  width: 42px; height: 30px; text-align: center; outline: none;
+  -moz-appearance: textfield;
+}
+.stepper input::-webkit-inner-spin-button,
+.stepper input::-webkit-outer-spin-button { display: none; }
+.config-unit {
+  font-size: 8px; letter-spacing: 0.3em;
+  color: var(--text-muted); text-transform: uppercase;
 }
 
-/* Slow creepy blink */
-@keyframes creepyBlink{
-  0%, 90%, 100% { opacity: 1; }
-  92% { opacity: 0.15; }
-  94% { opacity: 1; }
-  96% { opacity: 0.05; }
+/* Vol row */
+.vol-row { gap: 12px; }
+#volBar {
+  flex: 1; height: 2px;
+  background: rgba(155,28,28,0.12); border-radius: 2px; overflow: hidden;
+}
+#volFill {
+  height: 100%; width: 0%;
+  background: linear-gradient(to right, var(--deep-crimson), var(--ember), var(--gold));
+  border-radius: 2px; transition: width 0.05s ease;
+}
+.vol-mic-status {
+  font-size: 8px; letter-spacing: 0.3em;
+  color: var(--text-muted); text-transform: uppercase; white-space: nowrap;
+}
+.vol-mic-status.active {
+  color: var(--ember);
+  animation: statusPulse 1.2s ease-in-out infinite;
+}
+@keyframes statusPulse {
+  0%,100% { opacity: 1; }
+  50%      { opacity: 0.35; }
 }
 
-/* Fast horror flicker */
-@keyframes flicker{
-  0%   { text-shadow: 0 0 4px #fff; }
-  50%  { text-shadow: 0 0 18px #fff, 0 0 35px #fff; }
-  100% { text-shadow: 0 0 2px #fff; }
+/* ── CONTROLS ── */
+.controls-row {
+  display: flex; align-items: center;
+  gap: 12px; width: 100%;
+  justify-content: center; margin-bottom: 14px;
 }
-/* Creepy Music Button */
-#micBtn{
-  margin-top:14px;
-  font-size:15px;
-  padding:15px 15px;
-  border-radius:50%;
-  border:none;
-  cursor:pointer;
-
-  background:#000;
-  color:#fff;
-
-  box-shadow:
-    0 0 6px rgba(255,255,255,0.4),
-    0 0 18px rgba(255,255,255,0.3),
-    inset 0 0 12px rgba(255,255,255,0.15);
-
-  animation:
-    soundBreath 3s infinite,
-    soundFlicker 0.12s infinite;
-
-  transition: transform 0.15s ease;
+.btn-primary {
+  flex: 1; max-width: 112px; height: 44px;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text);
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 9px; font-weight: 400;
+  letter-spacing: 0.4em; text-transform: uppercase;
+  cursor: pointer; position: relative; overflow: hidden;
+  transition: border-color 0.25s, color 0.25s, box-shadow 0.25s;
 }
-
-/* sound breathing glow */
-@keyframes soundBreath{
-  0%,100%{
-    box-shadow:
-      0 0 6px rgba(255,255,255,0.4),
-      0 0 18px rgba(255,255,255,0.3),
-      inset 0 0 12px rgba(255,255,255,0.15);
-  }
-  50%{
-    box-shadow:
-      0 0 14px rgba(255,255,255,0.8),
-      0 0 35px rgba(255,255,255,0.6),
-      inset 0 0 20px rgba(255,255,255,0.35);
-  }
+.btn-primary::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, var(--deep-crimson), rgba(155,28,28,0.4));
+  opacity: 0; transition: opacity 0.25s;
 }
+.btn-primary:hover::before { opacity: 1; }
+.btn-primary:hover { border-color: var(--border-hover); color: #fff; box-shadow: 0 0 18px rgba(155,28,28,0.3); }
+.btn-primary span { position: relative; z-index: 1; }
 
-/* electric flicker */
-@keyframes soundFlicker{
-  0%{opacity:1}
-  92%{opacity:1}
-  94%{opacity:.25}
-  96%{opacity:1}
-  97%{opacity:.1}
-  100%{opacity:1}
+#micBtn {
+  width: 54px; height: 54px; flex-shrink: 0;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text); font-size: 20px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s ease;
+  box-shadow: 0 0 12px rgba(155,28,28,0.2), inset 0 0 10px rgba(0,0,0,0.4);
+  animation: micBreath 4s ease-in-out infinite;
+  position: relative;
 }
-
-/* ACTIVE = loud cursed sound */
-#micBtn.active{
-  background:#fff;
-  color:#000;
-
-  box-shadow:
-    0 0 20px rgba(255,255,255,1),
-    0 0 45px rgba(255,255,255,0.9),
-    inset 0 0 22px rgba(0,0,0,0.7);
-
-  animation:
-    soundPulse 0.6s infinite,
-    soundFlicker 0.08s infinite;
+#micBtn::before {
+  content: ''; position: absolute; inset: -5px;
+  border-radius: 50%; border: 1px solid transparent;
+  transition: border-color 0.3s;
+}
+#micBtn.active::before {
+  border-color: rgba(217,79,43,0.45);
+  animation: ringRotate 3s linear infinite;
+}
+@keyframes ringRotate { to { transform: rotate(360deg); } }
+@keyframes micBreath {
+  0%,100% { box-shadow: 0 0 12px rgba(155,28,28,0.2), inset 0 0 10px rgba(0,0,0,0.4); }
+  50%      { box-shadow: 0 0 26px rgba(155,28,28,0.4), inset 0 0 10px rgba(0,0,0,0.4); }
+}
+#micBtn.active {
+  background: rgba(120,15,15,0.85);
+  border-color: var(--ember);
+  animation: micPulse 0.8s ease-in-out infinite;
+  color: #fff;
+}
+@keyframes micPulse {
+  0%,100% { box-shadow: 0 0 20px rgba(217,79,43,0.5); }
+  50%      { box-shadow: 0 0 44px rgba(217,79,43,0.85); }
 }
 
-/* aggressive pulse */
-@keyframes soundPulse{
-  0%,100%{ transform:scale(1); }
-  50%{ transform:scale(1.12); }
+/* ── ORNAMENT ── */
+.ornament {
+  display: flex; align-items: center;
+  gap: 10px; margin: 6px 0; width: 100%;
+}
+.ornament-line { flex: 1; height: 1px; background: var(--border); }
+.ornament-diamond {
+  width: 5px; height: 5px;
+  border: 1px solid var(--gold-dim);
+  transform: rotate(45deg); flex-shrink: 0;
+}
+
+/* ── VOICE ECHO ── */
+.voice-echo {
+  width: 100%; border: 1px solid transparent;
+  border-radius: var(--radius); padding: 12px 16px;
+  text-align: center; opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 0.4s ease, transform 0.4s ease, border-color 0.4s;
+  min-height: 52px;
+}
+.voice-echo.visible {
+  opacity: 1; transform: translateY(0);
+  border-color: var(--border);
+  background: rgba(12,3,3,0.5);
+}
+.echo-label {
+  font-size: 7px; letter-spacing: 0.5em;
+  color: var(--text-muted); text-transform: uppercase; margin-bottom: 6px;
+}
+.echo-wave {
+  display: flex; align-items: flex-end;
+  justify-content: center; gap: 3px; height: 20px;
+}
+.wave-bar {
+  width: 3px; border-radius: 2px;
+  background: var(--ember); opacity: 0; transition: opacity 0.3s;
+}
+.voice-echo.visible .wave-bar {
+  opacity: 1; animation: waveAnim 1.2s ease-in-out infinite;
+}
+.wave-bar:nth-child(1) { height: 35%; animation-delay: 0s; }
+.wave-bar:nth-child(2) { height: 65%; animation-delay: 0.1s; }
+.wave-bar:nth-child(3) { height: 92%; animation-delay: 0.2s; }
+.wave-bar:nth-child(4) { height: 70%; animation-delay: 0.15s; }
+.wave-bar:nth-child(5) { height: 40%; animation-delay: 0.05s; }
+@keyframes waveAnim {
+  0%,100% { transform: scaleY(0.35); opacity: 0.45; }
+  50%      { transform: scaleY(1);    opacity: 1; }
+}
+
+/* ── COUNTDOWN ── */
+#countdown {
+  position: fixed; inset: 0;
+  display: none; align-items: center; justify-content: center;
+  flex-direction: column; gap: 14px;
+  background: rgba(2,0,0,0.9); backdrop-filter: blur(10px);
+  z-index: 50;
+}
+.countdown-label {
+  font-size: 9px; letter-spacing: 0.6em;
+  color: var(--text-dim); text-transform: uppercase;
+}
+#countdownNum {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: clamp(56px, 18vw, 100px);
+  color: var(--text);
+  text-shadow: 0 0 30px var(--glow-red), 0 0 80px rgba(155,28,28,0.3);
+  animation: countPop 0.4s ease-out; line-height: 1;
+}
+@keyframes countPop {
+  0%   { transform: scale(1.4); opacity: 0; }
+  60%  { transform: scale(0.92); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* ── COMPLETE ── */
+#completeBanner {
+  display: none; position: fixed; inset: 0;
+  background: rgba(2,0,0,0.94); backdrop-filter: blur(12px);
+  z-index: 60; flex-direction: column;
+  align-items: center; justify-content: center; gap: 10px;
+  animation: fadeIn 0.6s ease;
+}
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+.complete-icon {
+  width: 60px; height: 60px;
+  border: 1px solid var(--border-hover); border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 8px; font-size: 22px; position: relative;
+}
+.complete-icon::before {
+  content: ''; position: absolute; inset: -8px;
+  border-radius: 50%; border: 1px solid var(--border);
+}
+#completeBanner h2 {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: clamp(15px, 4.5vw, 22px);
+  color: var(--text); letter-spacing: 0.2em;
+  text-shadow: 0 0 25px var(--glow-red);
+}
+#completeBanner p {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic; font-size: 13px;
+  letter-spacing: 0.2em; color: var(--text-dim); margin-top: 4px;
+}
+#completeClose {
+  margin-top: 18px; background: transparent;
+  border: 1px solid var(--border); color: var(--text);
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 9px; letter-spacing: 0.5em;
+  padding: 11px 30px; cursor: pointer; text-transform: uppercase;
+  border-radius: var(--radius); transition: all 0.2s;
+}
+#completeClose:hover { background: rgba(155,28,28,0.3); border-color: var(--border-hover); color: #fff; }
+
+/* ── FOOTER ── */
+footer {
+  width: 100%; z-index: 2; position: relative;
+  padding: 12px 24px 14px;
+  border-top: 1px solid var(--border);
+  display: flex; flex-direction: column;
+  align-items: center; gap: 4px;
+}
+.footer-inner {
+  display: flex; align-items: center; gap: 10px;
+}
+.footer-dot { width: 3px; height: 3px; border-radius: 50%; background: var(--gold-dim); }
+.footer-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 12px; letter-spacing: 0.22em; color: var(--text-dim);
+}
+.footer-copy {
+  font-size: 8px; letter-spacing: 0.4em;
+  color: var(--text-muted); text-transform: uppercase; opacity: 0.45;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 380px) {
+  .main { padding: 18px 14px 14px; }
+  .config-panel { padding: 12px 14px; }
+  .btn-primary { max-width: 96px; font-size: 8px; }
+  #micBtn { width: 48px; height: 48px; font-size: 18px; }
+}
+@media (max-height: 660px) {
+  .candle-scene { margin-bottom: 12px; }
+  .header-band { padding: 12px 24px 10px; }
+  .main { padding: 14px 20px 12px; }
+  .timer-block { margin-bottom: 12px; }
+  .config-panel { margin-bottom: 12px; gap: 10px; }
+  .controls-row { margin-bottom: 10px; }
 }
 </style>
-
 </head>
-
 <body>
+<div class="bg-layer"></div>
 
-<div class="holder">
-  <div class="candle">
-    <div class="thread"></div>
-    <div class="flame"></div>
-  </div>
+<!-- COUNTDOWN -->
+<div id="countdown">
+  <div class="countdown-label">Session begins in</div>
+  <div id="countdownNum">3</div>
 </div>
-</br>
-<div id="timer">00:00:000</div>
-</br>
-<button id="micBtn">🔊</button>
+
+<!-- COMPLETE -->
+<div id="completeBanner">
+  <div class="complete-icon">🕯️</div>
+  <h2>Session Complete</h2>
+  <p>Your mind has been opened</p>
+  <button id="completeClose">Return</button>
+</div>
+
+<!-- HEADER -->
+<header class="header-band">
+  <div class="brand-mark">
+    <div class="brand-line"></div>
+    <div class="app-title">MindCrack</div>
+    <div class="brand-line r"></div>
+  </div>
+  <div class="app-subtitle">Psychological Phenomena · Subconscious Access</div>
+</header>
+
+<!-- MAIN -->
+<main class="main">
+
+  <!-- Candle -->
+  <div class="candle-scene">
+    <div class="halo"></div>
+    <div class="holder">
+      <div class="candle">
+        <div class="thread"></div>
+        <div class="flame-wrap" id="flameWrap">
+          <div class="flame-glow"></div>
+          <div class="flame" id="flame"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Timer -->
+  <div class="timer-block">
+    <div class="timer-label">Remaining</div>
+    <div id="timer">00:00</div>
+  </div>
+
+  <!-- Config -->
+  <div class="config-panel">
+    <div class="config-row">
+      <span class="config-label">Duration</span>
+      <div class="config-control">
+        <div class="stepper">
+          <button id="minMinus" type="button">−</button>
+          <input type="number" id="minInput" value="5" min="1" max="120">
+          <button id="minPlus" type="button">+</button>
+        </div>
+        <span class="config-unit">min</span>
+      </div>
+    </div>
+    <div class="config-row vol-row">
+      <span class="config-label">Voice Input</span>
+      <div id="volBar"><div id="volFill"></div></div>
+      <span class="vol-mic-status" id="micStatus">Inactive</span>
+    </div>
+  </div>
+
+  <!-- Controls -->
+  <div class="controls-row">
+    <button class="btn-primary" id="startBtn"><span>Begin</span></button>
+    <button id="micBtn" title="Toggle microphone">🎙️</button>
+    <button class="btn-primary" id="stopBtn"><span>End</span></button>
+  </div>
+
+  <!-- Ornament -->
+  <div class="ornament">
+    <div class="ornament-line"></div>
+    <div class="ornament-diamond"></div>
+    <div class="ornament-line"></div>
+  </div>
+
+  <!-- Voice echo -->
+  <div class="voice-echo" id="voiceBox">
+    <div class="echo-label">Echo · Deep Voice Replay</div>
+    <div class="echo-wave">
+      <div class="wave-bar"></div>
+      <div class="wave-bar"></div>
+      <div class="wave-bar"></div>
+      <div class="wave-bar"></div>
+      <div class="wave-bar"></div>
+    </div>
+  </div>
+
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-dot"></div>
+    <div class="footer-text">MindCrack © Humayun Shariar Himu</div>
+    <div class="footer-dot"></div>
+  </div>
+  <div class="footer-copy">Psychological Phenomena Tool</div>
+</footer>
 
 <script>
-let audioCtx, mic, processor;
-let running = false;
+/* ── STATE ── */
+let sessionRunning = false, micActive = false;
+let audioCtx = null, micStream = null, micSource = null, analyser = null;
+let mediaRecorder = null, recordedChunks = [], recordingTimeout = null;
+let bgAudio = null;
+let sessionDuration = 0, sessionElapsed = 0, timerInterval = null;
+let animFrameId = null, currentFlameScale = 1;
 
-/* Stopwatch */
-let startTime, timerInterval;
+/* ── ELEMENTS ── */
+const timerEl        = document.getElementById('timer');
+const flameWrap      = document.getElementById('flameWrap');
+const flame          = document.getElementById('flame');
+const volFill        = document.getElementById('volFill');
+const voiceBox       = document.getElementById('voiceBox');
+const micStatus      = document.getElementById('micStatus');
+const micBtn         = document.getElementById('micBtn');
+const startBtn       = document.getElementById('startBtn');
+const stopBtn        = document.getElementById('stopBtn');
+const minInput       = document.getElementById('minInput');
+const minMinus       = document.getElementById('minMinus');
+const minPlus        = document.getElementById('minPlus');
+const countdownEl    = document.getElementById('countdown');
+const countdownNum   = document.getElementById('countdownNum');
+const completeBanner = document.getElementById('completeBanner');
+const completeClose  = document.getElementById('completeClose');
 
-function startTimer(){
-  startTime = performance.now();
-  timerInterval = setInterval(()=>{
-    let t = performance.now() - startTime;
-    let ms = Math.floor(t % 1000);
-    let s = Math.floor(t/1000) % 60;
-    let m = Math.floor(t/60000);
-    timer.textContent =
-      `${String(m).padStart(2,"0")}:${String(s).padStart(2,"0")}:${String(ms).padStart(3,"0")}`;
-  },10);
-}
+/* ── STEPPER ── */
+minMinus.onclick = () => { const v = parseInt(minInput.value)||5; if(v>1) minInput.value=v-1; };
+minPlus.onclick  = () => { const v = parseInt(minInput.value)||5; if(v<120) minInput.value=v+1; };
 
-function stopTimer(){
-  clearInterval(timerInterval);
-  timer.textContent="00:00:000";
-}
-
-micBtn.onclick = async ()=>{
-  if(!running){
-    audioCtx = new AudioContext();
-    const stream = await navigator.mediaDevices.getUserMedia({audio:true});
-    mic = audioCtx.createMediaStreamSource(stream);
-
-    processor = audioCtx.createScriptProcessor(1024,1,1);
-    mic.connect(processor);
-    processor.connect(audioCtx.destination);
-
-    processor.onaudioprocess = e=>{
-      const input = e.inputBuffer.getChannelData(0);
-      const output = e.outputBuffer.getChannelData(0);
-      output.set(input);
-    };
-
-    running = true;
-    micBtn.classList.add("active");
-    startTimer();
-  }else{
-    processor.disconnect();
-    mic.disconnect();
-    audioCtx.close();
-    running = false;
-    micBtn.classList.remove("active");
-    stopTimer();
+/* ── FLAME ANALYSIS ── */
+function startFlameAnalysis() {
+  if (!analyser) return;
+  const bufLen = analyser.frequencyBinCount;
+  const dataArr = new Uint8Array(bufLen);
+  function tick() {
+    animFrameId = requestAnimationFrame(tick);
+    analyser.getByteFrequencyData(dataArr);
+    let sum = 0;
+    for (let i=0;i<bufLen;i++) sum += dataArr[i]*dataArr[i];
+    const rms = Math.sqrt(sum/bufLen);
+    const norm = Math.min(rms/80, 1);
+    volFill.style.width = (norm*100).toFixed(1)+'%';
+    const target = 0.95 + norm*0.9;
+    currentFlameScale += (target-currentFlameScale)*0.12;
+    flame.style.transform = `scaleY(${currentFlameScale.toFixed(3)})`;
+    const wobble = (Math.random()-0.5)*norm*8;
+    flameWrap.style.transform = `rotate(${wobble.toFixed(2)}deg)`;
   }
-};
-</script>
+  tick();
+}
+function stopFlameAnalysis() {
+  if (animFrameId) cancelAnimationFrame(animFrameId);
+  animFrameId = null;
+  flame.style.transform = ''; flameWrap.style.transform = '';
+  volFill.style.width = '0%';
+}
 
+/* ── MICROPHONE ── */
+micBtn.onclick = async () => {
+  if (!micActive) { try { await startMic(); } catch { alert('Microphone access denied.'); } }
+  else stopMic();
+};
+
+async function startMic() {
+  audioCtx = audioCtx || new AudioContext();
+  if (audioCtx.state==='suspended') await audioCtx.resume();
+  micStream = await navigator.mediaDevices.getUserMedia({audio:true,video:false});
+  micSource = audioCtx.createMediaStreamSource(micStream);
+  analyser = audioCtx.createAnalyser();
+  analyser.fftSize = 512;
+  micSource.connect(analyser);
+  micActive = true;
+  micBtn.classList.add('active');
+  micBtn.textContent = '🔴';
+  micStatus.textContent = 'Active';
+  micStatus.classList.add('active');
+  startFlameAnalysis();
+  startLoopRecording();
+}
+
+function stopMic() {
+  stopFlameAnalysis(); stopLoopRecording();
+  if (micSource) { micSource.disconnect(); micSource=null; }
+  if (analyser)  { analyser.disconnect();  analyser=null; }
+  if (micStream) { micStream.getTracks().forEach(t=>t.stop()); micStream=null; }
+  micActive=false;
+  micBtn.classList.remove('active');
+  micBtn.textContent='🎙️';
+  micStatus.textContent='Inactive';
+  micStatus.classList.remove('active');
+  voiceBox.classList.remove('visible');
+}
+
+/* ── LOOP RECORDING ── */
+function startLoopRecording() { captureClip(); }
+function captureClip() {
+  if (!micActive||!micStream) return;
+  recordedChunks=[];
+  try {
+    mediaRecorder = new MediaRecorder(micStream, {
+      mimeType: MediaRecorder.isTypeSupported('audio/webm;codecs=opus')?'audio/webm;codecs=opus':'audio/webm'
+    });
+  } catch { return; }
+  mediaRecorder.ondataavailable = e => { if(e.data&&e.data.size>0) recordedChunks.push(e.data); };
+  mediaRecorder.onstop = () => {
+    if (!micActive) return;
+    const blob = new Blob(recordedChunks,{type:'audio/webm'});
+    scheduleReplay(blob); captureClip();
+  };
+  mediaRecorder.start();
+  recordingTimeout = setTimeout(() => {
+    if (mediaRecorder&&mediaRecorder.state==='recording') mediaRecorder.stop();
+  }, 5000);
+}
+function stopLoopRecording() {
+  clearTimeout(recordingTimeout);
+  if (mediaRecorder&&mediaRecorder.state!=='inactive') mediaRecorder.stop();
+  mediaRecorder=null;
+}
+function scheduleReplay(blob) {
+  if (!micActive) return;
+  const url=URL.createObjectURL(blob);
+  const a=new Audio(url);
+  a.playbackRate=0.72; a.volume=0.88;
+  voiceBox.classList.add('visible');
+  a.play().catch(()=>{});
+  a.onended=()=>{ URL.revokeObjectURL(url); setTimeout(()=>{ if(!micActive) voiceBox.classList.remove('visible'); },600); };
+}
+
+/* ── BG MUSIC ── */
+function startBgMusic() {
+  if (bgAudio) { bgAudio.play(); return; }
+  bgAudio=new Audio();
+  bgAudio.crossOrigin='anonymous';
+  bgAudio.src='https://raw.githubusercontent.com/HumayunShariarHimu/BrainGuruProject/main/Audio/meditation_music.mp3';
+  bgAudio.loop=true; bgAudio.volume=0.18;
+  bgAudio.play().catch(()=>{});
+}
+function stopBgMusic() { if(bgAudio){bgAudio.pause();bgAudio.currentTime=0;} }
+
+/* ── SESSION ── */
+function formatTime(s) {
+  return `${String(Math.floor(s/60)).padStart(2,'0')}:${String(s%60).padStart(2,'0')}`;
+}
+function startSession() {
+  if (sessionRunning) return;
+  const mins=Math.max(1,parseInt(minInput.value)||5);
+  sessionDuration=mins*60; sessionElapsed=0;
+  let count=3;
+  countdownEl.style.display='flex';
+  countdownNum.textContent=count;
+  const cTimer=setInterval(()=>{
+    count--;
+    if (count<=0) {
+      clearInterval(cTimer);
+      countdownEl.style.display='none';
+      runSession();
+    } else {
+      countdownNum.textContent=count;
+      countdownNum.style.animation='none';
+      void countdownNum.offsetWidth;
+      countdownNum.style.animation='countPop 0.4s ease-out';
+    }
+  },1000);
+}
+function runSession() {
+  sessionRunning=true;
+  timerEl.textContent=formatTime(sessionDuration);
+  startBgMusic();
+  timerInterval=setInterval(()=>{
+    sessionElapsed++;
+    const r=sessionDuration-sessionElapsed;
+    timerEl.textContent=formatTime(r);
+    if (r<=0) endSession(true);
+  },1000);
+}
+function endSession(completed=false) {
+  sessionRunning=false;
+  clearInterval(timerInterval);
+  stopBgMusic();
+  if (micActive) stopMic();
+  timerEl.textContent='00:00';
+  if (completed) completeBanner.style.display='flex';
+}
+
+startBtn.onclick  = () => startSession();
+stopBtn.onclick   = () => { if(sessionRunning) endSession(false); };
+completeClose.onclick = () => { completeBanner.style.display='none'; };
+minInput.addEventListener('keydown',e=>{ if(['e','E','+','-','.'].includes(e.key)) e.preventDefault(); });
+</script>
 </body>
 </html>
